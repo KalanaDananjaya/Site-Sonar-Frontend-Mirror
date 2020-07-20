@@ -36,13 +36,15 @@ import {
   dashboardNASDAQChart,
 } from "variables/charts.js";
 
-import SearchForm from "components/siteSonar/searchForm.js";
+import SearchForm from "components/siteSonar/SearchForm.js";
+import LastRunDiv from "components/siteSonar/LastRunData.js"
 
 class Dashboard extends React.Component {
   render() {
     return (
       <>
         <div className="content">
+        <LastRunDiv/>
         <SearchForm {...this.props} />
           <Row>
             <Col lg="3" md="6" sm="6">
