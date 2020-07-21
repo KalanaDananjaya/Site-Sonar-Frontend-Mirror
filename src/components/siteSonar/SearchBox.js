@@ -21,6 +21,9 @@ const SearchBox = () => {
     showResult:false,
     searchResults: {}
   })
+
+  const EquationRegex = /([A-Z]|\(|\)|&|~|\|| )/
+  const CharacterRegex = /([A-Z])/
   const handleSiteIdChange = (event) => {
     setSiteIdState(event.target.value);
   }
@@ -29,13 +32,17 @@ const SearchBox = () => {
     setEquationState(event.target.value);
   }
 
+  //const BlankSearchField = { variable : String.fromCharCode((65+Object.keys(SearchFieldState.length)), query_key:"", query_value:""};
   const BlankSearchField = { query_key:"", query_value:""};
+  
   const [SearchFieldState, setSearchFieldState] = useState([
     {...BlankSearchField}
   ]);
 
   const addSearchField = (event) => {
       setSearchFieldState ([...SearchFieldState,{...BlankSearchField}]);
+      console.log(SearchFieldState);
+      console.log(Object.keys(SearchFieldState).length);
   }
 
   const handleSearchFieldChange = (event) => {
@@ -44,13 +51,51 @@ const SearchBox = () => {
     setSearchFieldState(updatedSearchField);
   };
 
+  function renameKeys(obj, newKeys) {
+    const keyValues = Object.keys(obj).map(key => {
+      const newKey = newKeys[key] || key;
+      return { [newKey]: obj[key] };
+    });
+    return Object.assign({}, ...keyValues);
+  }
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    
+    let NumElements = Object.keys(SearchFieldState).length;
+    let Equation = EquationState.trim()
+    //console.log(RawString);
+    for (let letter of Equation){
+      console.log("0",letter);
+      if (CharacterRegex.test(letter)){
+        console.log("1",letter);
+        // check letter in range of variables
+        if ((letter.charCodeAt(0) - 65) >= NumElements){
+          console.log("Equation contain invalid characters");
+          return
+        }
+      }
+      else if(!(EquationRegex.test(letter))){
+        console.log("Equation contain invalid characters");
+        return
+      }
+    }
+    let KeyMap = {}
+    for ( let i = 0; i < Object.keys(SearchFieldState).length; i++){
+      let NewKey = String.fromCharCode(65+i);
+      KeyMap[i] = NewKey;
+    }
+
+    let RenamedSearchFieldState = renameKeys(SearchFieldState,KeyMap)
+      
     const SearchFormInput = {
       SiteId: SiteIdState.trim(),
-      SearchFields : SearchFieldState,
-      Equation: EquationState.trim()
+      SearchFields : RenamedSearchFieldState,
+      Equation: Equation
     };
+    
+
+
     console.log(SearchFormInput);
     console.log(BackendUrl);
     axios.post(BackendUrl,{SearchFormInput})
@@ -74,18 +119,17 @@ return (
         name="site-id" 
         id="site-id" 
         value={SiteIdState.Id}
-        onChange={handleSiteIdChange}
+        onChange={ handleSiteIdChange }
         required
       /> 
-      <Button type="button" value="add" onClick={addSearchField}>Add more filters</Button>
+      <Button type="button" value="add" onClick={ addSearchField }>Add more filters</Button>
     </InputGroup>
     {
       SearchFieldState.map((val, idx) => (
           <SearchField
               key={`query-${idx}`}
               idx={idx}
-              handleSearchFieldChange ={ handleSearchFieldChange }
-              // handleRadioButtonChange = { handleRadioButtonChange }
+              handleSearchFieldChange ={ handleSearchFieldChange } 
           />
       ))
     }

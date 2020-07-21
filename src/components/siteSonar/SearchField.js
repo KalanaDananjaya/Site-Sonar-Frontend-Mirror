@@ -10,16 +10,12 @@ import {
     ButtonGroup
   } from "reactstrap";
 
-const SearchField = ({ idx, handleSearchFieldChange, handleRadioButtonChange }) => {
+const SearchField = ({ idx, handleSearchFieldChange }) => {
         const query_key = `query_key_input_${idx}`;
         const query_value = `query_value_${idx}`;
         const variable_name = String.fromCharCode(idx+65)
         return (
          <InputGroup className="no-border" key={`query_field_${idx}`}>
-          {/* //   <ButtonGroup onClick={ handleRadioButtonChange } data-id={idx}>
-          //     <Button value="+" data-id={idx} active={} >+</Button>
-          //     <Button value="-" data-id={idx}>-</Button>
-          //   </ButtonGroup> */}
           <InputGroupText htmlFor="variable_name">{variable_name}</InputGroupText>
             <Input
               type="text"
@@ -51,8 +47,7 @@ const SearchField = ({ idx, handleSearchFieldChange, handleRadioButtonChange }) 
 SearchField.propTypes = {
     idx: PropTypes.number,
     SearchFieldState: PropTypes.array,
-    handleSearchFieldChange: PropTypes.func,
-    handleRadioButtonChange: PropTypes.func
+    handleSearchFieldChange: PropTypes.func
 }
 
 export default SearchField;
