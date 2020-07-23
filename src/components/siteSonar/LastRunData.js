@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
+import {
+    Card,
+    CardBody,
+    CardFooter,
+    CardTitle,
+    Row,
+    Col,
+  } from "reactstrap";
+
 const LastRunDiv = () => {
 
     const BackendUrl = `${process.env.REACT_APP_BACKEND_URL}/last_run`;
@@ -13,37 +22,118 @@ const LastRunDiv = () => {
             console.log(res.data);
             setRunState(res.data)
         })
-      }, [RunState.run_id, RunState.started_at, RunState.finished_at, RunState.state]);
+      }, []);
 
-    return ( 
-        // <div onLoad={getLastRunData()}>
+    return (
         <div>
-            <span>{RunState.run_id}</span>
-            <span>{RunState.started_at}</span>
-            <span>{RunState.finished_at}</span>
-            <span>{RunState.state}</span>
+            <Row>
+            <Col lg="3" md="6" sm="6">
+              <Card className="card-stats">
+                <CardBody>
+                  <Row>
+                    <Col md="4" xs="5">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-globe text-warning" />
+                      </div>
+                    </Col>
+                    <Col md="8" xs="7">
+                      <div className="numbers">
+                        <p className="card-category">Last Run Id</p>
+                        <CardTitle tag="p">{RunState.run_id}</CardTitle>
+                        <p />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                  <hr />
+                  <div className="stats">
+                    <i className="fas fa-sync-alt" /> Update Now
+                  </div>
+                </CardFooter>
+              </Card>
+            </Col>
+            <Col lg="3" md="6" sm="6">
+              <Card className="card-stats">
+                <CardBody>
+                  <Row>
+                    <Col md="4" xs="5">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-money-coins text-success" />
+                      </div>
+                    </Col>
+                    <Col md="8" xs="7">
+                      <div className="numbers">
+                        <p className="card-category">Started At</p>
+                        <CardTitle tag="p" style={{fontSize: 15}}>{RunState.started_at}</CardTitle>
+                        <p />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                  <hr />
+                  <div className="stats">
+                    <i className="far fa-calendar" /> Not defined
+                  </div>
+                </CardFooter>
+              </Card>
+            </Col>
+            <Col lg="3" md="6" sm="6">
+              <Card className="card-stats">
+                <CardBody>
+                  <Row>
+                    <Col md="4" xs="5">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-vector text-danger" />
+                      </div>
+                    </Col>
+                    <Col md="8" xs="7">
+                      <div className="numbers">
+                        <p className="card-category">Finished At</p>
+                        <CardTitle tag="p" style={{fontSize: 15}}>{RunState.finished_at}</CardTitle>
+                        <p />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                  <hr />
+                  <div className="stats">
+                    <i className="far fa-clock" /> In the last hour
+                  </div>
+                </CardFooter>
+              </Card>
+            </Col>
+            <Col lg="3" md="6" sm="6">
+              <Card className="card-stats">
+                <CardBody>
+                  <Row>
+                    <Col md="4" xs="5">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-favourite-28 text-primary" />
+                      </div>
+                    </Col>
+                    <Col md="8" xs="7">
+                      <div className="numbers">
+                        <p className="card-category">State</p>
+                        <CardTitle tag="p" style={{fontSize: 18}}>{RunState.state}</CardTitle>
+                        <p />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                  <hr />
+                  <div className="stats">
+                    <i className="fas fa-sync-alt" /> Update now
+                  </div>
+                </CardFooter>
+              </Card>
+            </Col>
+          </Row>
         </div>
         );
 }
-
-    
-
-    
-
-    // handleSubmit = (Query, SiteId) => {
-    //     const SearchQuery = {
-    //         Query: Query,
-    //         SiteId : SiteId
-    //     };
-    //     console.log(this.backendUrl);
-    //     axios.post(this.backendUrl,{SearchQuery})
-    //     .then(res =>{
-    //         console.log(res);
-    //         console.log(res.data);
-    //         this.setState({
-    //             showResult: true
-    //         })
-    //     });
-    // };
 
 export default LastRunDiv;
