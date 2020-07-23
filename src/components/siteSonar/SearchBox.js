@@ -1,51 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 
 import SearchField from "./SearchField.js";
 import {
   InputGroup,
   InputGroupText,
-  InputGroupAddon,
   Input,
   Button
 } from "reactstrap";
 
 import axios from 'axios';
+import Select from 'react-select';
 
+const SearchBox = (props) => {
+  const BackendSitesUrl = `${process.env.REACT_APP_BACKEND_URL}/all_sites`;
 
-const SearchBox = () => {
-    
-  const BackendUrl = `${process.env.REACT_APP_BACKEND_URL}/search_site`;
-  const [SiteIdState, setSiteIdState] = useState(0);
-  const [EquationState, setEquationState] = useState('')
-  const [showResult, setShowResult] = useState({
-    showResult:false,
-    searchResults: {}
-  })
+  const [Sites,setSites] = useState([]);
 
-  const EquationRegex = /([A-Z]|\(|\)|&|~|\|| )/
-  const CharacterRegex = /([A-Z])/
-  const handleSiteIdChange = (event) => {
-    setSiteIdState(event.target.value);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function getSites(){
+      const res = await axios.get(BackendSitesUrl);
+      const data = res.data;
+      const site_array = []
+      for (let site of data){
+        site_array.push({value : site.site_id, label : site.site_name})
+      }
+      console.log('sitea rray is',site_array)
+      setSites([...site_array]);
+      setLoading(true);
+      
+    }
+    getSites();
+  },[]);
+  
+  const BackendUrl = `${process.env.REACT_APP_BACKEND_URL}/search_site`
+  const [SiteIdValue, setSiteIdValue] = useState("1");
+
+  const [EquationState, setEquationState] = useState('');
+
+  const handleSiteIdChange = (item) => {
+    setSiteIdValue(item.value);
   }
 
   const handleEquationChange = (event) => {
     setEquationState(event.target.value);
   }
 
-  //const BlankSearchField = { variable : String.fromCharCode((65+Object.keys(SearchFieldState.length)), query_key:"", query_value:""};
   const BlankSearchField = { query_key:"", query_value:""};
-  
   const [SearchFieldState, setSearchFieldState] = useState([
     {...BlankSearchField}
   ]);
 
   const addSearchField = (event) => {
-      setSearchFieldState ([...SearchFieldState,{...BlankSearchField}]);
-      console.log(SearchFieldState);
-      console.log(Object.keys(SearchFieldState).length);
+    setSearchFieldState ([...SearchFieldState,{...BlankSearchField}]);
   }
 
-  const handleSearchFieldChange = (event) => {
+  const removeSearchField = (event) => {
+    const list = [...SearchFieldState];
+    list.splice(-1, 1);
+    setSearchFieldState(list);
+  }
+
+  const handleSearchKeyFieldChange = (item, event) => {
+    console.log(item,event);
+    const updatedSearchField = [...SearchFieldState];
+    updatedSearchField[item.index]["query_key"] = item.value;
+    setSearchFieldState(updatedSearchField);
+  };
+
+  const handleSearchValueFieldChange = (event) => {
     const updatedSearchField = [...SearchFieldState];
     updatedSearchField[event.target.dataset.id][event.target.dataset.key] = event.target.value.trim();
     setSearchFieldState(updatedSearchField);
@@ -59,24 +84,22 @@ const SearchBox = () => {
     return Object.assign({}, ...keyValues);
   }
 
+  const EquationRegex = /([A-Z]|\(|\)|&|~|\|| )/;
+  const CharacterRegex = /([A-Z])/;
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    
     let NumElements = Object.keys(SearchFieldState).length;
     let Equation = EquationState.trim()
-    //console.log(RawString);
     for (let letter of Equation){
-      console.log("0",letter);
       if (CharacterRegex.test(letter)){
-        console.log("1",letter);
         // check letter in range of variables
         if ((letter.charCodeAt(0) - 65) >= NumElements){
-          console.log("Equation contain invalid characters");
+          console.log("Equation contains invalid characters");
           return
         }
       }
       else if(!(EquationRegex.test(letter))){
-        console.log("Equation contain invalid characters");
+        console.log("Equation contains invalid characters");
         return
       }
     }
@@ -89,68 +112,60 @@ const SearchBox = () => {
     let RenamedSearchFieldState = renameKeys(SearchFieldState,KeyMap)
       
     const SearchFormInput = {
-      SiteId: SiteIdState.trim(),
+      SiteId: SiteIdValue,
       SearchFields : RenamedSearchFieldState,
       Equation: Equation
     };
-    
-
-
     console.log(SearchFormInput);
-    console.log(BackendUrl);
     axios.post(BackendUrl,{SearchFormInput})
     .then(res =>{
-        console.log(res);
-        console.log(res.data);
-        setShowResult({
-            showResult: true,
-            searchResults: res.data
-        })
+        props.storeSearchResults(res.data);
     });
   }
 
 
 return (
-  <form onSubmit= { handleFormSubmit }> 
-    <InputGroup className="no-border">
-      <InputGroupText htmlFor="site id">Site ID</InputGroupText> 
-      <Input 
-        type="text" 
-        name="site-id" 
-        id="site-id" 
-        value={SiteIdState.Id}
-        onChange={ handleSiteIdChange }
-        required
-      /> 
-      <Button type="button" value="add" onClick={ addSearchField }>Add more filters</Button>
-    </InputGroup>
-    {
-      SearchFieldState.map((val, idx) => (
-          <SearchField
-              key={`query-${idx}`}
-              idx={idx}
-              handleSearchFieldChange ={ handleSearchFieldChange } 
-          />
-      ))
-    }
-    <InputGroup>
-      <InputGroupText htmlFor="equation">Equation</InputGroupText> 
-      <Input 
-        type="text" 
-        name="equation" 
-        id="equation" 
-        onChange={handleEquationChange}
-        required
-      /> 
-    </InputGroup>
-    <InputGroupAddon addonType="append">
-      <InputGroupText>
-        <i className="nc-icon nc-zoom-split" />
-      </InputGroupText>
-      <Button type="submit" value="Submit">Submit</Button>
-    </InputGroupAddon>
-    
-  </form>
+    <form onSubmit= { handleFormSubmit } className="bg-secondary"> 
+      <InputGroup className="no-border">
+        <InputGroupText htmlFor="site id">Site ID</InputGroupText> 
+        <div style={{width : "50%" }}>
+          <Select options={Sites} onChange={ handleSiteIdChange }/>
+        </div>
+      </InputGroup>
+      {
+        SearchFieldState.map((val, idx) => (
+            <SearchField
+                key={`query-${idx}`}
+                idx={idx}
+                handleSearchKeyFieldChange = { handleSearchKeyFieldChange } 
+                handleSearchValueFieldChange = { handleSearchValueFieldChange }
+            />
+        ))
+      }
+      <InputGroup>
+        <InputGroupText htmlFor="equation">Equation</InputGroupText> 
+        <Input 
+          type="text" 
+          name="equation" 
+          id="equation"
+          onChange={handleEquationChange}
+          required
+          placeholder="Enter equation"
+        /> 
+      </InputGroup>
+      <InputGroup style={{ display: "flex" }}>
+        <Button type="button" className="btn btn-primary float-left" onClick={ addSearchField }>Add more filters</Button>
+        <Button type="button" className="btn btn-primary" onClick={ removeSearchField }>Remove filters</Button>
+        <Button type="submit" value="Submit" >Search</Button>
+      </InputGroup>
+      
+    </form>
+
   );
 }
+
+SearchBox.propTypes = {
+  storeSearchResults: PropTypes.func
+}
+
 export default SearchBox;
