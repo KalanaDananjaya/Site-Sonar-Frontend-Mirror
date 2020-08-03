@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 import SearchBox from "./SearchBox.js";
-import ResultBox from "./resultBox";
+import ResultBox from "./ResultBox";
 
 const SearchForm = () => {
 
     const [Result, setSearchResult] = useState({
         ShowResult:false,
         SearchResults: {}
-      })
+      });
 
     const storeSearchResults = (SearchResults) => {
         console.log("received");
@@ -16,7 +16,7 @@ const SearchForm = () => {
         setSearchResult({
             ShowResult:true,
             SearchResults: SearchResults
-        })
+        });
     }
 
     

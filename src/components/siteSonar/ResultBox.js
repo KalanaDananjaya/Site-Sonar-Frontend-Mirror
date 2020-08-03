@@ -13,17 +13,68 @@ import {
   Col,
 } from "reactstrap";
 
-import { dashboardEmailStatisticsChart } from "../Charts/PieChart.js";
 
 const ResultBox = (props) => {
-  
-  const test = () => {
 
+  const getKeys = () => {
+    return Object.keys(props.searchData.matching_nodes);
+  }
+
+  const RenderRow = (props) =>{
+    console.log("row params",props)
+    var paramNames = Object.keys(props.params);
+    return (
+      <tr style="background-color:#FF0000"> 
+        <td key={props.nodename}>{props.nodename}</td>
+        <td>
+          <table border="1px">
+            <tbody>
+              <RenderSubRow paramNames={paramNames} params={props.params}></RenderSubRow>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    )
+  }
+
+  const RenderSubRow = (props) => {
+    return props.paramNames.map((paramName,index) => {
+      return (
+        <tr key={index}>
+          <td>{paramName}</td>
+          <td>{props.params[paramName]}</td>
+        </tr>
+      )
+    });
+  }
+
+  const getMatchingRowsData = () => {
+    console.log('search data',props.searchData);
+    console.log('matching nodes',props.searchData.matching_nodes);
+    var items = props.searchData.matching_nodes;
+    console.log("items",items)
+    var keys = getKeys();
+
+    return keys.map((key, index)=>{
+      return <RenderRow key={index} nodename={key} params={items[key]} color="green"/>
+    })
+  }
+
+  const getUnmatchingRowsData = () => {
+    console.log('unmatching nodes',props.searchData.unmatching_nodes);
+    var items = props.searchData.unmatching_nodes;
+    console.log("items",items)
+    var keys = getKeys();
+
+    return keys.map((key, index)=>{
+      return <RenderRow key={index} nodename={key} params={items[key]} color="red"/>
+    })
   }
   
   if (props.showResult){
     return (
       <div>
+        <div>
         <Row>
             <Col lg="3" md="6" sm="6">
               <Card className="card-stats">
@@ -130,7 +181,23 @@ const ResultBox = (props) => {
               </Card>
             </Col>
           </Row>
+          </div>
+          <div>
+            <table border="1px">
+              <thead>
+                <tr>
+                  <th key="nodename">Node Name</th>
+                  <th key="params">Parameters</th>
+                </tr>
+              </thead>
+              <tbody>
+                {getMatchingRowsData()}
+                {getUnmatchingRowsData()}
+              </tbody>
+            </table>
+          </div>
       </div>
+      
     );
   }
   else{
