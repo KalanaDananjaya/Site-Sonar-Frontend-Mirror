@@ -1,7 +1,7 @@
 
 import React from "react";
 //Overlay: enable overlay = try
-import { Pie } from "react-chartjs-2";
+import { Table } from 'reactstrap';
 // reactstrap components
 import {
   Card,
@@ -16,25 +16,35 @@ import {
 
 const ResultBox = (props) => {
 
-  const getKeys = () => {
+  const getMatchingKeys = () => {
     return Object.keys(props.searchData.matching_nodes);
+  }
+
+  const getUnmatchingKeys = () => {
+    return Object.keys(props.searchData.unmatching_nodes);
   }
 
   const RenderRow = (props) =>{
     console.log("row params",props)
-    var paramNames = Object.keys(props.params);
-    return (
-      <tr style="background-color:#FF0000"> 
-        <td key={props.nodename}>{props.nodename}</td>
-        <td>
-          <table border="1px">
-            <tbody>
-              <RenderSubRow paramNames={paramNames} params={props.params}></RenderSubRow>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-    )
+    
+    if (props.params){
+      var paramNames = Object.keys(props.params);
+      return (
+        <tr bgcolor={props.color}> 
+          <td key={props.nodename}>{props.nodename}</td>
+          <td>
+            <Table border="1px">
+              <tbody>
+                <RenderSubRow paramNames={paramNames} params={props.params}></RenderSubRow>
+              </tbody>
+            </Table>
+          </td>
+        </tr>
+      )
+    }
+    else{
+      return <tr></tr>
+    }
   }
 
   const RenderSubRow = (props) => {
@@ -49,11 +59,11 @@ const ResultBox = (props) => {
   }
 
   const getMatchingRowsData = () => {
-    console.log('search data',props.searchData);
-    console.log('matching nodes',props.searchData.matching_nodes);
+    // console.log('search data',props.searchData);
+     console.log('matching nodes',props.searchData.matching_nodes);
     var items = props.searchData.matching_nodes;
-    console.log("items",items)
-    var keys = getKeys();
+    //console.log("items",items)
+    var keys = getMatchingKeys();
 
     return keys.map((key, index)=>{
       return <RenderRow key={index} nodename={key} params={items[key]} color="green"/>
@@ -64,8 +74,8 @@ const ResultBox = (props) => {
     console.log('unmatching nodes',props.searchData.unmatching_nodes);
     var items = props.searchData.unmatching_nodes;
     console.log("items",items)
-    var keys = getKeys();
-
+    var keys = getUnmatchingKeys();
+    console.log("unmatching keys",keys)
     return keys.map((key, index)=>{
       return <RenderRow key={index} nodename={key} params={items[key]} color="red"/>
     })
@@ -183,7 +193,7 @@ const ResultBox = (props) => {
           </Row>
           </div>
           <div>
-            <table border="1px">
+            <Table bordered>
               <thead>
                 <tr>
                   <th key="nodename">Node Name</th>
@@ -194,7 +204,7 @@ const ResultBox = (props) => {
                 {getMatchingRowsData()}
                 {getUnmatchingRowsData()}
               </tbody>
-            </table>
+            </Table>
           </div>
       </div>
       
