@@ -12,12 +12,6 @@ import {
     InputGroupText,
   } from "reactstrap";
 
-  import {
-    
-    Input,
-    Button
-  } from "reactstrap";
-
 import Select from 'react-select';
 
 const LastRunDiv = (props) => {
@@ -31,9 +25,6 @@ const LastRunDiv = (props) => {
       props.handleRunSelection(item.value);
     }
 
-    const handleRunSubmit = () => {
-      props.handleRunSubmit();
-    }
     
     useEffect(() => {
       async function getRuns(){
@@ -57,9 +48,8 @@ const LastRunDiv = (props) => {
             <InputGroup className="no-border">
               <InputGroupText htmlFor="run_id">Run ID</InputGroupText> 
                 <div style={{width : "50%" }}>
-                  <Select options={ RunSummary } onChange={ handleRunSelection } />
+                  <Select options={ RunSummary } onChange={ handleRunSelection } placeholder="Change Run Id"/>
                 </div>
-                <Button type="submit" onClick = { handleRunSubmit } >Set Run</Button>
             </InputGroup>
             </Row>
             <Row>
@@ -74,8 +64,8 @@ const LastRunDiv = (props) => {
                     </Col>
                     <Col md="8" xs="7">
                       <div className="numbers">
-                        <p className="card-category">Last Run Id</p>
-                        <CardTitle tag="p">{props.RunState.selected_run.run_id}</CardTitle>
+                        <p className="card-category">Run Id</p>
+                        <CardTitle tag="p">{ props.SelectedRun.run_id }</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -101,7 +91,7 @@ const LastRunDiv = (props) => {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">Started At</p>
-                        <CardTitle tag="p" style={{fontSize: 15}}>{props.RunState.selected_run.started_at}</CardTitle>
+                        <CardTitle tag="p" style={{ fontSize: 15 }}>{ props.SelectedRun.started_at }</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -127,7 +117,7 @@ const LastRunDiv = (props) => {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">Finished At</p>
-                        <CardTitle tag="p" style={{fontSize: 15}}>{props.RunState.selected_run.finished_at}</CardTitle>
+                        <CardTitle tag="p" style={{ fontSize: 15 }}>{ props.SelectedRun.finished_at }</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -153,7 +143,7 @@ const LastRunDiv = (props) => {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">State</p>
-                        <CardTitle tag="p" style={{fontSize: 18}}>{props.RunState.selected_run.state}</CardTitle>
+                        <CardTitle tag="p" style={{ fontSize: 18 }}>{ props.SelectedRun.state }</CardTitle>
                         <p />
                       </div>
                     </Col>

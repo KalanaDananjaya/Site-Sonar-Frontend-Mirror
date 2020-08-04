@@ -10,44 +10,47 @@ import {
 import Select from 'react-select';
 import axios from 'axios';
 
-const SearchField = ({ idx, handleSearchKeyFieldChange, handleSearchValueFieldChange }) => {
-
+const SearchField = (props) => {
         const [SearchKeys,setSearchKeys] = useState([])
         const getSearchKeysUrl = `${process.env.REACT_APP_BACKEND_URL}/search_keys`;
 
         useEffect(() => {
           async function getSearchKeys(){
-            const res = await axios.get(getSearchKeysUrl);
-            const data = JSON.parse(res.data);
-            console.log('data is ',data, data[0])
-            const keys = []
-            for(let s_key of data){
-              keys.push({value : s_key, label : s_key, index: idx});
+            const Run = {
+              RunId : props.RunId
             }
-            setSearchKeys([...keys]);
+            if (Run.RunId){
+              const res = await axios.post(getSearchKeysUrl,{Run});
+              const data = JSON.parse(res.data);
+              const keys = []
+              for(let s_key of data){
+                keys.push({value : s_key, label : s_key, index: props.idx});
+              }
+              setSearchKeys([...keys]);
+            }
           }
           getSearchKeys();
-        },[]);
+        },[props.RunId]);
 
 
-        const query_key = `query_key_input_${idx}`;
-        const query_value = `query_value_${idx}`;
-        const variable_name = String.fromCharCode(idx+65)
+        const query_key = `query_key_input_${props.idx}`;
+        const query_value = `query_value_${props.idx}`;
+        const variable_name = String.fromCharCode(props.idx+65)
         return (
-         <InputGroup className="no-border" key={`query_field_${idx}`}>
+         <InputGroup className="no-border" key={`query_field_${props.idx}`}>
           <InputGroupText htmlFor="variable_name">{variable_name}</InputGroupText>
             <div style={{width : "50%" }}>
-              <Select options={ SearchKeys }  data-id={idx} data-key ="query_key" id={query_key} onChange= { (item,event) => handleSearchKeyFieldChange(item,event) }/>
+              <Select options={ SearchKeys }  data-id={props.idx} data-key ="query_key" id={query_key} onChange= { (item,event) => props.handleSearchKeyFieldChange(item,event) }/>
             </div>
             
             <Input
               type="text"
               name={query_value}
-              data-id={idx}
+              data-id={props.idx}
               data-key = "query_value"
               id={query_value}
               className="query"
-              onChange = { handleSearchValueFieldChange }
+              onChange = { props.handleSearchValueFieldChange }
               placeholder="Enter search parameter value"
               required
               style={{background: '#ffffff'}}
@@ -57,11 +60,11 @@ const SearchField = ({ idx, handleSearchKeyFieldChange, handleSearchValueFieldCh
   
     }
 
-SearchField.propTypes = {
-    idx: PropTypes.number,
-    SearchFieldState: PropTypes.array,
-    handleSearchKeyFieldChange: PropTypes.func,
-    handleSearchValueFieldChange: PropTypes.func
-}
+// SearchField.propTypes = {
+//     idx: PropTypes.number,
+//     SearchFieldState: PropTypes.array,
+//     handleSearchKeyFieldChange: PropTypes.func,
+//     handleSearchValueFieldChange: PropTypes.func
+// }
 
 export default SearchField;

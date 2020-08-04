@@ -110,7 +110,8 @@ const SearchBox = (props) => {
     const SearchFormInput = {
       SiteId: SiteIdValue,
       SearchFields : RenamedSearchFieldState,
-      Equation: Equation
+      Equation: Equation,
+      RunId: props.RunId
     };
     console.log(SearchFormInput);
     axios.post(BackendUrl,{SearchFormInput})
@@ -135,6 +136,7 @@ return (
                 idx={idx}
                 handleSearchKeyFieldChange = { handleSearchKeyFieldChange } 
                 handleSearchValueFieldChange = { handleSearchValueFieldChange }
+                RunId = { props.RunId }
             />
         ))
       }

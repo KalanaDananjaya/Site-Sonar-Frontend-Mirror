@@ -12,31 +12,18 @@ const SearchForm = () => {
       });
 
 
-    const [RunState, setRunState] = useState({
-        'all_runs': 'Loading',
-        'selected_run': 'Loading'
-    });
 
-    
 
-    const [RunIdValue, setRunIdValue] = useState("0");
+    const [AllRuns, setAllRuns] = useState({'all_runs': 'Loading'});
+    const [SelectedRun, setSelectedRun] = useState({'selected_run': 'Loading'});
+
+  
 
     const handleRunSelection = (run_id) => {
-        setRunIdValue(run_id);
-        for (const [idx,element] in RunState.all_runs.entries()) {
-            if (run_id === element.run_id){
-                
-            }
-        }
-    }
-
-    const handleRunSubmit = () => {
-       
-        //change selected run to this
+        setSelectedRun(AllRuns[run_id]);
     }
 
     const storeSearchResults = (SearchResults) => {
-        console.log("received");
         console.log(SearchResults);
         setSearchResult({
             ShowResult:true,
@@ -45,15 +32,19 @@ const SearchForm = () => {
     }
 
     const handleRunChange = (data) => {
-        setRunState(data);
-        console.log('run state is', RunState);
+        const all_runs_array ={}
+        for (const key in data.all_runs) {
+          all_runs_array[data.all_runs[key].run_id] = data.all_runs[key]
+        }
+        setAllRuns(all_runs_array)
+        setSelectedRun(data.selected_run);
     }
 
     
     return ( 
     <div>
-        <LastRunDiv RunState = { RunState } handleRunChange = { handleRunChange } handleRunSelection = { handleRunSelection }></LastRunDiv>
-        <SearchBox storeSearchResults = { storeSearchResults } style={{margin: '10px'}}></SearchBox> 
+        <LastRunDiv AllRuns = { AllRuns } SelectedRun = { SelectedRun } handleRunChange = { handleRunChange } handleRunSelection = { handleRunSelection }></LastRunDiv>
+        <SearchBox storeSearchResults = { storeSearchResults } RunId = { SelectedRun.run_id }  style={{ margin: '10px' }}></SearchBox> 
         <ResultBox searchData = { Result.SearchResults } showResult = { Result.ShowResult } ></ResultBox>
     </div>
     );
