@@ -17,7 +17,6 @@ const SearchBox = (props) => {
 
   const [Sites,setSites] = useState([]);
 
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function getSites(){
@@ -27,10 +26,7 @@ const SearchBox = (props) => {
       for (let site of data){
         site_array.push({value : site.site_id, label : site.site_name})
       }
-      console.log('sitea rray is',site_array)
       setSites([...site_array]);
-      setLoading(true);
-      
     }
     getSites();
   },[]);
@@ -127,7 +123,7 @@ const SearchBox = (props) => {
 return (
     <form onSubmit= { handleFormSubmit } className="bg-secondary"> 
       <InputGroup className="no-border">
-        <InputGroupText htmlFor="site id">Site ID</InputGroupText> 
+        <InputGroupText htmlFor="site_id">Site ID</InputGroupText> 
         <div style={{width : "50%" }}>
           <Select options={Sites} onChange={ handleSiteIdChange }/>
         </div>

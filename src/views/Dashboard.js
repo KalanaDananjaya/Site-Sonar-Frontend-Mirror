@@ -37,40 +37,17 @@ import {
 } from "variables/charts.js";
 
 import SearchForm from "components/siteSonar/SearchForm.js";
-import LastRunDiv from "components/siteSonar/LastRunData.js"
+// import LastRunDiv from "components/siteSonar/LastRunData.js"
 
 class Dashboard extends React.Component {
   render() {
     return (
       <>
         <div className="content">
-        <LastRunDiv/>
+        
         <SearchForm {...this.props} />
-
-          {/* <Row>
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle tag="h5">Users Behavior</CardTitle>
-                  <p className="card-category">24 Hours performance</p>
-                </CardHeader>
-                <CardBody>
-                  <Line
-                    data={dashboard24HoursPerformanceChart.data}
-                    options={dashboard24HoursPerformanceChart.options}
-                    width={400}
-                    height={100}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fa fa-history" /> Updated 3 minutes ago
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row> */}
+{/* 
+          
           <Row>
             <Col md="4">
               <Card>
@@ -124,7 +101,7 @@ class Dashboard extends React.Component {
                 </CardFooter>
               </Card>
             </Col>
-          </Row>
+          </Row> */}
         </div>
       </>
     );
