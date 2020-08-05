@@ -146,7 +146,7 @@ return (
           type="text" 
           name="equation" 
           id="equation"
-          onChange={handleEquationChange}
+          onChange={ handleEquationChange }
           required
           placeholder="Enter equation"
         /> 

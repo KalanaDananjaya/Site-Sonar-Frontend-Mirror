@@ -5,7 +5,6 @@ import { Table } from 'reactstrap';
 // reactstrap components
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   CardTitle,
@@ -17,11 +16,11 @@ import {
 const ResultBox = (props) => {
 
   const getMatchingKeys = () => {
-    return Object.keys(props.searchData.matching_nodes);
+    return Object.keys(props.searchData.matching_nodes_data);
   }
 
   const getUnmatchingKeys = () => {
-    return Object.keys(props.searchData.unmatching_nodes);
+    return Object.keys(props.searchData.unmatching_nodes_data);
   }
 
   const RenderRow = (props) =>{
@@ -60,8 +59,8 @@ const ResultBox = (props) => {
 
   const getMatchingRowsData = () => {
     // console.log('search data',props.searchData);
-     console.log('matching nodes',props.searchData.matching_nodes);
-    var items = props.searchData.matching_nodes;
+     console.log('matching nodes',props.searchData.matching_nodes_data);
+    var items = props.searchData.matching_nodes_data;
     //console.log("items",items)
     var keys = getMatchingKeys();
 
@@ -71,8 +70,8 @@ const ResultBox = (props) => {
   }
 
   const getUnmatchingRowsData = () => {
-    console.log('unmatching nodes',props.searchData.unmatching_nodes);
-    var items = props.searchData.unmatching_nodes;
+    console.log('unmatching nodes',props.searchData.unmatching_nodes_data);
+    var items = props.searchData.unmatching_nodes_data;
     console.log("items",items)
     var keys = getUnmatchingKeys();
     console.log("unmatching keys",keys)
@@ -97,8 +96,8 @@ const ResultBox = (props) => {
                     </Col>
                     <Col md="8" xs="7">
                       <div className="numbers">
-                        <p className="card-category">Submitted Jobs</p>
-                        <CardTitle tag="p">{props.searchData.submitted_jobs}</CardTitle>
+                        <p className="card-category">Estimated Total Nodes</p>
+                        <CardTitle tag="p">{props.searchData.total_nodes}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -124,7 +123,7 @@ const ResultBox = (props) => {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">Nodes Covered</p>
-                        <CardTitle tag="p">{props.searchData.completed_jobs}</CardTitle>
+                        <CardTitle tag="p">{props.searchData.covered_nodes}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -150,7 +149,7 @@ const ResultBox = (props) => {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">Matching Nodes</p>
-                        <CardTitle tag="p">{props.searchData.matching_jobs}</CardTitle>
+                        <CardTitle tag="p">{props.searchData.matching_nodes}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -176,7 +175,7 @@ const ResultBox = (props) => {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">Matching Percentage</p>
-                        <CardTitle tag="p">{Math.round((props.searchData.matching_jobs/props.searchData.completed_jobs)*100)}%</CardTitle>
+                        <CardTitle tag="p">{Math.round((props.searchData.matching_nodes/props.searchData.covered_nodes)*100)}%</CardTitle>
                         <p />
                       </div>
                     </Col>
