@@ -17,12 +17,12 @@ const SearchBox = (props) => {
 
   const [Sites,setSites] = useState([]);
 
-
   useEffect(() => {
     async function getSites(){
       const res = await axios.get(BackendSitesUrl);
       const data = res.data;
       const site_array = []
+      site_array.push({value : "all", label : "All Sites"})
       for (let site of data){
         site_array.push({value : site.site_id, label : site.site_name})
       }
