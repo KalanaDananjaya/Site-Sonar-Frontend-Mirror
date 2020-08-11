@@ -16,33 +16,27 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-
 import React from "react";
-import { Container, Row } from "reactstrap";
-import PropTypes from "prop-types";
 
+import {
+  Navbar,
+  NavbarBrand,
+  Container,
+} from "reactstrap";
 
-const Footer = (props) => {
+const Header = () => {
   return (
-    <footer
-      className={"footer" + (props.default ? " footer-default" : "")}
+    <Navbar
+      color= "transparent"
+      expand="lg"
+      className = "navbar-absolute fixed-top navbar-transparent"
     >
-      <Container fluid={props.fluid ? true : false}>
-        <Row>           
-          <div className="credits ml-auto">
-            <div className="copyright">
-              &copy; {1900 + new Date().getYear()}, Created by JAliEn Team
-            </div>
-          </div>
-        </Row>
+      <Container fluid>
+        <div className="navbar-wrapper">  
+          <NavbarBrand href="/">Site Sonar - WLCG Configuration Monitoring Tool</NavbarBrand>
+        </div> 
       </Container>
-    </footer>
+    </Navbar>
   );
 }
-
-Footer.propTypes = {
-  default: PropTypes.bool,
-  fluid: PropTypes.bool,
-};
-
-export default Footer;
+export default Header;

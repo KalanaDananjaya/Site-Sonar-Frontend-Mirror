@@ -21,7 +21,7 @@ import React from "react";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch } from "react-router-dom";
 
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 
 
@@ -64,14 +64,8 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        {/* <Sidebar
-          {...this.props}
-          routes={routes}
-          bgColor={this.state.backgroundColor}
-          activeColor={this.state.activeColor}
-        /> */}
         <div className="main-panel" ref={this.mainPanel}>
-          <DemoNavbar {...this.props} />
+          <Navbar {...this.props} />
           
           <Switch>
             {routes.map((prop, key) => {

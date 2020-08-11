@@ -20,16 +20,14 @@ import React from "react";
 
 import SearchForm from "components/siteSonar/SearchForm.js";
 
-class Dashboard extends React.Component {
-  render() {
-    return (
-      <>
-        <div className="content">
-        <SearchForm {...this.props} />
-        </div>
-      </>
-    );
-  }
+const Dashboard = (props) => {
+  return (
+    <>
+      <div className="content">
+      <SearchForm {...props} />
+      </div>
+    </>
+  );
 }
 
 export default Dashboard;
