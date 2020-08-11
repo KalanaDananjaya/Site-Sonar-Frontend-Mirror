@@ -60,11 +60,11 @@ const SearchField = (props) => {
   
     }
 
-// SearchField.propTypes = {
-//     idx: PropTypes.number,
-//     SearchFieldState: PropTypes.array,
-//     handleSearchKeyFieldChange: PropTypes.func,
-//     handleSearchValueFieldChange: PropTypes.func
-// }
+SearchField.propTypes = {
+    idx: PropTypes.number,
+    RunId: PropTypes.number,
+    handleSearchKeyFieldChange: PropTypes.func,
+    handleSearchValueFieldChange: PropTypes.func
+}
 
 export default SearchField;

@@ -29,7 +29,7 @@ const SearchBox = (props) => {
       setSites([...site_array]);
     }
     getSites();
-  },[]);
+  });
   
   const BackendUrl = `${process.env.REACT_APP_BACKEND_URL}/search_site`
   const [SiteIdValue, setSiteIdValue] = useState("1");

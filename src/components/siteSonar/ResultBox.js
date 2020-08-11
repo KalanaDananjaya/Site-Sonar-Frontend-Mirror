@@ -261,8 +261,8 @@ const ResultBox = (props) => {
                       </Col>
                       <Col md="8" xs="7">
                         <div className="numbers">
-                          <p className="card-category">Estimated Total Nodes</p>
-                          <CardTitle tag="p">{props.searchData.total_nodes}</CardTitle>
+                          <p className="card-category">Total Nodes</p>
+                          <CardTitle tag="p">~{props.searchData.total_nodes}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -339,7 +339,7 @@ const ResultBox = (props) => {
                       </Col>
                       <Col md="8" xs="7">
                         <div className="numbers">
-                          <p className="card-category">Matching Percentage</p>
+                          <p className="card-category">Percentage</p>
                           <CardTitle tag="p">{Math.round((props.searchData.matching_nodes/props.searchData.covered_nodes)*100)}%</CardTitle>
                           <p />
                         </div>
@@ -375,7 +375,7 @@ const ResultBox = (props) => {
     }
   }  
   else{
-    return (<a></a>)
+    return (<div></div>)
   }
   
 }

@@ -19,7 +19,7 @@ const LastRunDiv = (props) => {
     const BackendRunsUrl = `${process.env.REACT_APP_BACKEND_URL}/all_runs`;
     
     const [RunSummary, setRunSummary] = useState([]);
-    
+    console.log('url ',BackendRunsUrl);
 
     const handleRunSelection = (item) => {
       props.handleRunSelection(item.value);
