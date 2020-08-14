@@ -6,8 +6,11 @@ import {
   InputGroup,
   InputGroupText,
   Input,
-  Button
+  Button,
+  Spinner,
 } from "reactstrap";
+
+
 import axios from 'axios';
 import Select from 'react-select';
 
@@ -16,6 +19,7 @@ const SearchBox = (props) => {
   const BackendSitesUrl = `${process.env.REACT_APP_BACKEND_URL}/all_sites`;
 
   const [Sites,setSites] = useState([]);
+  const [ResultReceived, setResultReceived] = useState(false);
 
   useEffect(() => {
     async function getSites(){
@@ -29,7 +33,7 @@ const SearchBox = (props) => {
       setSites([...site_array]);
     }
     getSites();
-  });
+  },[]);
   
   const BackendUrl = `${process.env.REACT_APP_BACKEND_URL}/search_site`
   const [SiteIdValue, setSiteIdValue] = useState("1");
@@ -83,6 +87,7 @@ const SearchBox = (props) => {
   const CharacterRegex = /([A-Z])/;
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    setResultReceived(true);
     let NumElements = Object.keys(SearchFieldState).length;
     let Equation = EquationState.trim()
     for (let letter of Equation){
@@ -115,17 +120,18 @@ const SearchBox = (props) => {
     console.log(SearchFormInput);
     axios.post(BackendUrl,{SearchFormInput})
     .then(res =>{
-        props.storeSearchResults(res.data);
+        setResultReceived(false);
+        props.storeSearchResults(res.data);  
     });
   }
 
 
 return (
   <div>
-    <form onSubmit= { handleFormSubmit } className="bg-secondary"> 
+    <form onSubmit= { handleFormSubmit } style={{  background: "#282C2C ", margin: "10px", borderRadius: "5px"}}> 
       <InputGroup className="no-border">
-        <InputGroupText htmlFor="site_id">Site ID</InputGroupText> 
-        <div style={{width : "50%" }}>
+        <InputGroupText htmlFor="site_id" style={{ marginLeft: "10px", marginTop: "10px", marginBottom: "10px" }}>Site ID</InputGroupText> 
+        <div style={{ width : "50%", marginTop: "10px", marginBottom: "10px"}}>
           <Select options={Sites} onChange={ handleSiteIdChange }/>
         </div>
       </InputGroup>
@@ -141,7 +147,7 @@ return (
         ))
       }
       <InputGroup>
-        <InputGroupText htmlFor="equation">Equation</InputGroupText> 
+        <InputGroupText htmlFor="equation" style={{ marginLeft: "10px", marginTop: "10px", marginBottom: "10px" }}>Equation</InputGroupText> 
         <Input 
           type="text" 
           name="equation" 
@@ -149,12 +155,23 @@ return (
           onChange={ handleEquationChange }
           required
           placeholder="Enter equation"
+          style={{background: '#ffffff', marginTop: "10px", marginBottom: "10px", marginRight: "10px", borderRadius: "5px"}}
         /> 
       </InputGroup>
       <InputGroup style={{ display: "flex" }}>
-        <Button type="button" className="btn btn-primary float-left" onClick={ addSearchField }>Add more filters</Button>
-        <Button type="button" className="btn btn-primary" onClick={ removeSearchField }>Remove filters</Button>
-        <Button type="submit" value="Submit" >Search</Button>
+        <Button type="button" className="btn btn-primary float-left" style={{ marginTop: "10px", marginBottom: "10px", marginLeft: "10px", backgroundColor: "#0F709B"}} onClick={ addSearchField }>Add more filters</Button>
+        <Button type="button" className="btn btn-primary" style={{ marginTop: "10px", marginBottom: "10px", marginLeft: "10px", marginRight: "10px", backgroundColor: "#0F709B"}} onClick={ removeSearchField }>Remove filters</Button>
+        <Button type="submit" value="Submit" disabled={ ResultReceived } style={{ backgroundColor: "#60C73C" }}>
+          <Spinner
+            as="span"
+            animation="grow"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            color="success"
+            hidden= { !ResultReceived }
+          />
+          Search</Button>
       </InputGroup>
       
     </form>

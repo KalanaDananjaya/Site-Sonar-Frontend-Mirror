@@ -348,7 +348,7 @@ const ResultBox = (props) => {
             </div>
             <div>
               <Table bordered style={{ color : "white"}}>
-                <thead bgColor="darkgray">
+                <thead bgcolor="darkgray">
                   <tr>
                     <th key="nodename">Node Name</th>
                     <th key="params">Parameters</th>

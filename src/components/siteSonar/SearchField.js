@@ -38,8 +38,8 @@ const SearchField = (props) => {
         const variable_name = String.fromCharCode(props.idx+65)
         return (
          <InputGroup className="no-border" key={`query_field_${props.idx}`}>
-          <InputGroupText htmlFor="variable_name">{variable_name}</InputGroupText>
-            <div style={{width : "50%" }}>
+          <InputGroupText htmlFor="variable_name" style={{ marginLeft: "10px", marginTop: "10px", marginBottom: "10px" }}>{variable_name}</InputGroupText>
+            <div style={{ width : "50%",marginTop: "10px", marginBottom: "10px", marginRight: "10px" }}>
               <Select options={ SearchKeys }  data-id={props.idx} data-key ="query_key" id={query_key} onChange= { (item,event) => props.handleSearchKeyFieldChange(item,event) }/>
             </div>
             
@@ -53,7 +53,7 @@ const SearchField = (props) => {
               onChange = { props.handleSearchValueFieldChange }
               placeholder="Enter search parameter value"
               required
-              style={{background: '#ffffff'}}
+              style={{background: '#ffffff', marginTop: "10px", marginBottom: "10px", marginRight: "10px", borderRadius: "5px"}}
             />
             </InputGroup>
           );
