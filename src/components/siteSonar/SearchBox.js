@@ -8,11 +8,11 @@ import {
   Input,
   Button
 } from "reactstrap";
-
 import axios from 'axios';
 import Select from 'react-select';
 
 const SearchBox = (props) => {
+  
   const BackendSitesUrl = `${process.env.REACT_APP_BACKEND_URL}/all_sites`;
 
   const [Sites,setSites] = useState([]);
@@ -60,7 +60,6 @@ const SearchBox = (props) => {
   }
 
   const handleSearchKeyFieldChange = (item, event) => {
-    console.log(item,event);
     const updatedSearchField = [...SearchFieldState];
     updatedSearchField[item.index]["query_key"] = item.value;
     setSearchFieldState(updatedSearchField);
@@ -90,12 +89,12 @@ const SearchBox = (props) => {
       if (CharacterRegex.test(letter)){
         // check letter in range of variables
         if ((letter.charCodeAt(0) - 65) >= NumElements){
-          console.log("Equation contains invalid characters");
+          alert("Equation contain invalid letters for identifiers");
           return
         }
       }
       else if(!(EquationRegex.test(letter))){
-        console.log("Equation contains invalid characters");
+        alert("Equation contains invalid characters. Only valid characters are [&,|,~,(,)]");
         return
       }
     }
@@ -122,6 +121,7 @@ const SearchBox = (props) => {
 
 
 return (
+  <div>
     <form onSubmit= { handleFormSubmit } className="bg-secondary"> 
       <InputGroup className="no-border">
         <InputGroupText htmlFor="site_id">Site ID</InputGroupText> 
@@ -158,7 +158,7 @@ return (
       </InputGroup>
       
     </form>
-
+  </div>
   );
 }
 

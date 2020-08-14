@@ -23,9 +23,7 @@ const ResultBox = (props) => {
     return Object.keys(props.searchData.unmatching_nodes_data);
   }
 
-  const RenderRow = (props) =>{
-    console.log("row params",props)
-    
+  const RenderRow = (props) =>{    
     if (props.params){
       var paramNames = Object.keys(props.params);
       return (
@@ -58,7 +56,6 @@ const ResultBox = (props) => {
   }
 
   const getMatchingRowsData = () => {
-    console.log('matching nodes',props.searchData.matching_nodes_data);
     var items = props.searchData.matching_nodes_data;
     var keys = getMatchingKeys();
 
@@ -68,18 +65,14 @@ const ResultBox = (props) => {
   }
 
   const getUnmatchingRowsData = () => {
-    console.log('unmatching nodes',props.searchData.unmatching_nodes_data);
     var items = props.searchData.unmatching_nodes_data;
-    console.log("items",items)
     var keys = getUnmatchingKeys();
-    console.log("unmatching keys",keys)
     return keys.map((key, index)=>{
       return <RenderRow key={index} nodename={key} params={items[key]} color="red"/>
     })
   }
 
   const RenderSiteRow = (props) =>{  
-    console.log('params are',props.sitename);
     return (
       <tr bgcolor={props.color}>
         <td key={props.sitename}><strong>{props.sitename}</strong></td>
@@ -89,7 +82,6 @@ const ResultBox = (props) => {
     
   }
   const getMatchingSites = () => {
-    console.log('matching sites',props.searchData.matching_sites_list, Object.keys(props.searchData.matching_sites_list));
     var items = props.searchData.matching_sites_list;
     var keys = Object.keys(props.searchData.matching_sites_list);
     return keys.map((key, index)=>{
@@ -98,7 +90,6 @@ const ResultBox = (props) => {
   }
 
   const getUnmatchingSites = () => {
-    console.log('unmatching sites',props.searchData.unmatching_sites_list);
     var items = props.searchData.unmatching_sites_list;
     var keys = Object.keys(props.searchData.unmatching_sites_list);
     return keys.map((key, index)=>{
@@ -107,7 +98,6 @@ const ResultBox = (props) => {
   }
 
   const getIncompleteSites = () => {
-    console.log('matching sites',props.searchData.incomplete_sites_list);
     var items = props.searchData.incomplete_sites_list;
     var keys = Object.keys(props.searchData.incomplete_sites_list);
     return keys.map((key, index)=>{
