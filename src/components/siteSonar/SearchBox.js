@@ -128,7 +128,7 @@ const SearchBox = (props) => {
 
 return (
   <div>
-    <form onSubmit= { handleFormSubmit } style={{  background: "#282C2C ", margin: "10px", borderRadius: "5px"}}> 
+    <form onSubmit= { handleFormSubmit } style={{  background: "#282C2C", margin: "10px", borderRadius: "5px"}}> 
       <InputGroup className="no-border">
         <InputGroupText htmlFor="site_id" style={{ marginLeft: "10px", marginTop: "10px", marginBottom: "10px" }}>Site ID</InputGroupText> 
         <div style={{ width : "50%", marginTop: "10px", marginBottom: "10px"}}>
@@ -159,8 +159,8 @@ return (
         /> 
       </InputGroup>
       <InputGroup style={{ display: "flex" }}>
-        <Button type="button" className="btn btn-primary float-left" style={{ marginTop: "10px", marginBottom: "10px", marginLeft: "10px", backgroundColor: "#0F709B"}} onClick={ addSearchField }>Add more filters</Button>
-        <Button type="button" className="btn btn-primary" style={{ marginTop: "10px", marginBottom: "10px", marginLeft: "10px", marginRight: "10px", backgroundColor: "#0F709B"}} onClick={ removeSearchField }>Remove filters</Button>
+        <Button type="button" className="btn btn-primary float-left" style={{ marginTop: "10px", marginBottom: "10px", marginLeft: "10px", backgroundColor: "#0F709B"}} onClick={ addSearchField }>Add Filter</Button>
+        <Button type="button" className="btn btn-primary" style={{ marginTop: "10px", marginBottom: "10px", marginLeft: "10px", marginRight: "10px", backgroundColor: "#0F709B"}} onClick={ removeSearchField }>Remove Filter</Button>
         <Button type="submit" value="Submit" disabled={ ResultReceived } style={{ backgroundColor: "#60C73C" }}>
           <Spinner
             as="span"
@@ -168,7 +168,7 @@ return (
             size="sm"
             role="status"
             aria-hidden="true"
-            color="success"
+            color="yellow"
             hidden= { !ResultReceived }
           />
           Search</Button>

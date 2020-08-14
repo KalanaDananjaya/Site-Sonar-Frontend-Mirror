@@ -47,7 +47,7 @@ const LastRunDiv = (props) => {
             <Row>
             <InputGroup className="no-border">
               <InputGroupText htmlFor="run_id">Run ID</InputGroupText> 
-                <div style={{width : "50%" }}>
+                <div style={{ width : "50%" }}>
                   <Select options={ RunSummary } onChange={ handleRunSelection } placeholder="Change Run Id"/>
                 </div>
             </InputGroup>
@@ -73,9 +73,6 @@ const LastRunDiv = (props) => {
                 </CardBody>
                 <CardFooter>
                   <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update Now
-                  </div>
                 </CardFooter>
               </Card>
             </Col>
@@ -99,9 +96,6 @@ const LastRunDiv = (props) => {
                 </CardBody>
                 <CardFooter>
                   <hr />
-                  <div className="stats">
-                    <i className="far fa-calendar" /> Not defined
-                  </div>
                 </CardFooter>
               </Card>
             </Col>
@@ -125,9 +119,6 @@ const LastRunDiv = (props) => {
                 </CardBody>
                 <CardFooter>
                   <hr />
-                  <div className="stats">
-                    <i className="far fa-clock" /> In the last hour
-                  </div>
                 </CardFooter>
               </Card>
             </Col>
@@ -151,9 +142,6 @@ const LastRunDiv = (props) => {
                 </CardBody>
                 <CardFooter>
                   <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update now
-                  </div>
                 </CardFooter>
               </Card>
             </Col>

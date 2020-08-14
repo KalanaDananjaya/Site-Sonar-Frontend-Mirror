@@ -260,9 +260,6 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="fas fa-sync-alt" /> Update Now
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
@@ -286,9 +283,6 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="far fa-calendar" /> Last day
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
@@ -312,9 +306,6 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="far fa-clock" /> In the last hour
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
@@ -338,9 +329,6 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="fas fa-sync-alt" /> Update now
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
@@ -348,7 +336,7 @@ const ResultBox = (props) => {
             </div>
             <div>
               <Table bordered style={{ color : "white"}}>
-                <thead bgcolor="darkgray">
+                <thead bgcolor="#282C2C">
                   <tr>
                     <th key="nodename">Node Name</th>
                     <th key="params">Parameters</th>
