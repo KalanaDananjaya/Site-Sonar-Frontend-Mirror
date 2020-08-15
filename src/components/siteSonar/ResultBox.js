@@ -10,10 +10,99 @@ import {
   CardTitle,
   Row,
   Col,
+  Button,
 } from "reactstrap";
-
+import { CSVLink } from "react-csv";
 
 const ResultBox = (props) => {
+
+  const createSitesCSV = () =>  {
+
+      const results = [["Site Name","State"]];
+      var items = props.searchData.matching_sites_list;
+      var keys = Object.keys(props.searchData.matching_sites_list);
+
+      if (!(Object.keys(items).length === 0 && items.constructor === Object)){
+        keys.map((key)=>{
+          results.push([items[key],"SUPPORTED"]);
+        });
+      }
+
+      items = props.searchData.unmatching_sites_list;
+      keys = Object.keys(props.searchData.unmatching_sites_list);
+
+      if (!(Object.keys(items).length === 0 && items.constructor === Object)){
+        keys.map((key)=>{
+          results.push([items[key],"NOT SUPPORTED"]);
+        });
+      }
+
+      items = props.searchData.incomplete_sites_list;
+      keys = Object.keys(props.searchData.incomplete_sites_list);
+
+      if (!(Object.keys(items).length === 0 && items.constructor === Object)){
+        keys.map((key)=>{
+          results.push([items[key],"N/A"]);
+        });
+      }
+      return results
+  }
+
+  const createNodesCSVData = () =>{
+    var items = props.searchData.matching_nodes_data;
+    var keys = getMatchingKeys();
+
+    var results = [];
+    if (!(Object.keys(items).length === 0 && items.constructor === Object)){
+      const paramKeys = Object.keys(items[keys[0]]);
+      keys.map((nodename) => {
+        const node = {};
+        node['nodename'] = nodename;
+        const params = {};
+        paramKeys.map((paramName)=>{
+          params[paramName] = items[nodename][paramName]
+        });
+        node['params'] = params;
+        node['supported'] = 'SUPPORTED'
+        results.push(node);
+      });
+    }
+    
+    items = props.searchData.unmatching_nodes_data;
+    keys = getUnmatchingKeys();
+    
+    if (!(Object.keys(items).length === 0 && items.constructor === Object)){
+      var paramKeys = Object.keys(items[keys[0]]);
+      keys.map((nodename) => {
+        const node = {};
+        node['nodename'] = nodename;
+        const params = {};
+        paramKeys.map((paramName)=>{
+          params[paramName] = items[nodename][paramName]
+        });
+        node['params'] = params
+        node['supported'] = 'NOT SUPPORTED'
+        results.push(node);
+      });
+    }
+    return results;
+  }
+    
+  const createNodesCSVHeaders = () => {
+    const results = createNodesCSVData();
+    const headers = [
+      {label: 'Node Name', key: 'nodename'}
+    ];
+    if (!(results.length == null || results.length ===0)){
+      var paramNames = Object.keys(results[0]['params']);
+      paramNames.map((paramName) => {
+        headers.push({label: paramName, key: 'params.'+paramName})
+      });
+    headers.push({label: 'Supported', key: 'supported'})
+
+    return headers
+    }
+  }
 
   const getMatchingKeys = () => {
     return Object.keys(props.searchData.matching_nodes_data);
@@ -25,7 +114,7 @@ const ResultBox = (props) => {
 
   const RenderRow = (props) =>{    
     if (props.params){
-      var paramNames = Object.keys(props.params);
+      const paramNames = Object.keys(props.params);
       return (
         <tr bgcolor={props.color}> 
           <td key={props.nodename}><strong>{props.nodename}</strong></td>
@@ -131,9 +220,6 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="fas fa-sync-alt" /> Update Now
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
@@ -157,9 +243,6 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="far fa-calendar" /> Last day
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
@@ -183,9 +266,6 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="far fa-clock" /> In the last hour
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
@@ -209,17 +289,24 @@ const ResultBox = (props) => {
                   </CardBody>
                   <CardFooter>
                     <hr />
-                    <div className="stats">
-                      <i className="fas fa-sync-alt" /> Update now
-                    </div>
                   </CardFooter>
                 </Card>
               </Col>
             </Row>
             </div>
             <div>
+              <div>            
+                <CSVLink data={ createSitesCSV() } filename={"site-sonar-sites.csv"}>
+                  <Button
+                    className="btn btn-primary"
+                    raised="true"
+                    color="primary">
+                    Export Results
+                  </Button>
+                </CSVLink>
+              </div>
               <Table bordered style={{ color : "white"}}>
-                <thead bgColor="darkgray">
+                <thead bgcolor="#282C2C">
                   <tr>
                     <th key="sitename">Site Name</th>
                     <th key="state">State</th>
@@ -335,6 +422,16 @@ const ResultBox = (props) => {
             </Row>
             </div>
             <div>
+              <div>            
+                <CSVLink data={ createNodesCSVData() }  headers={ createNodesCSVHeaders() }filename={"site-sonar-nodes.csv"}>
+                  <Button
+                    className="btn btn-primary"
+                    raised="true"
+                    color="primary">
+                    Export Results
+                  </Button>
+                </CSVLink>
+              </div>
               <Table bordered style={{ color : "white"}}>
                 <thead bgcolor="#282C2C">
                   <tr>

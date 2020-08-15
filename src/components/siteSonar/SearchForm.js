@@ -22,7 +22,6 @@ const SearchForm = () => {
     }
 
     const storeSearchResults = (SearchResults) => {
-        console.log('s result',SearchResults);
         if (SearchResults['grid_search']===true){
             setSearchResult({
                 GridSearch: true,

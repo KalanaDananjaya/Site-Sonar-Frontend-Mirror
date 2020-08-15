@@ -117,7 +117,6 @@ const SearchBox = (props) => {
       Equation: Equation,
       RunId: props.RunId
     };
-    console.log(SearchFormInput);
     axios.post(BackendUrl,{SearchFormInput})
     .then(res =>{
         setResultReceived(false);
