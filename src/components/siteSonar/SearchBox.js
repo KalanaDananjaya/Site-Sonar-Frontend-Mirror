@@ -89,12 +89,14 @@ const SearchBox = (props) => {
         // check letter in range of variables
         if (letter.charCodeAt(0) - 65 >= NumElements) {
           alert("Equation contain invalid letters for identifiers");
+          setResultReceived(false);
           return;
         }
       } else if (!EquationRegex.test(letter)) {
         alert(
           "Equation contains invalid characters. Only valid characters are [&,|,~,(,)]"
         );
+        setResultReceived(false);
         return;
       }
     }
