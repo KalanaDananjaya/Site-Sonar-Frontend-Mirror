@@ -34,7 +34,7 @@ const LastRunDiv = (props) => {
         const all_runs = res.data.all_runs;
         const run_array =[]
         for (const element in all_runs) {
-          run_array.push({value : all_runs[element].run_id, label : all_runs[element].run_id})
+          run_array.push({value : all_runs[element].run_id, label : "ID: " + all_runs[element].run_id + ", Finished at: " + all_runs[element].finished_at})
         }
         setRunSummary([...run_array]);
       }
