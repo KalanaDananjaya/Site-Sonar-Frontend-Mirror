@@ -24,10 +24,10 @@ const Dashboard = (props) => {
   return (
     <>
       <div className="content">
-      <SearchForm {...props} />
+        <SearchForm {...props} />
       </div>
     </>
   );
-}
+};
 
 export default Dashboard;

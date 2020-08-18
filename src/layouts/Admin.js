@@ -24,8 +24,7 @@ import { Route, Switch } from "react-router-dom";
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 
-
-import routes from "../routes.js"
+import routes from "../routes.js";
 var ps;
 
 class Dashboard extends React.Component {
@@ -66,21 +65,16 @@ class Dashboard extends React.Component {
       <div className="wrapper">
         <div className="main-panel" ref={this.mainPanel}>
           <Navbar {...this.props} />
-          
+
           <Switch>
             {routes.map((prop, key) => {
               return (
-                <Route
-                  path={prop.path}
-                  component={prop.component}
-                  key={key}
-                />
+                <Route path={prop.path} component={prop.component} key={key} />
               );
             })}
           </Switch>
           <Footer fluid />
         </div>
-       
       </div>
     );
   }

@@ -21,14 +21,11 @@ import React from "react";
 import { Container, Row } from "reactstrap";
 import PropTypes from "prop-types";
 
-
 const Footer = (props) => {
   return (
-    <footer
-      className={"footer" + (props.default ? " footer-default" : "")}
-    >
+    <footer className={"footer" + (props.default ? " footer-default" : "")}>
       <Container fluid={props.fluid ? true : false}>
-        <Row>           
+        <Row>
           <div className="credits ml-auto">
             <div className="copyright">
               &copy; {1900 + new Date().getYear()}, Created by JAliEn Team
@@ -38,7 +35,7 @@ const Footer = (props) => {
       </Container>
     </footer>
   );
-}
+};
 
 Footer.propTypes = {
   default: PropTypes.bool,

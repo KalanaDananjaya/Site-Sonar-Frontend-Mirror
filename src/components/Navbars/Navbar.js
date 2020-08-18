@@ -18,25 +18,23 @@
 */
 import React from "react";
 
-import {
-  Navbar,
-  NavbarBrand,
-  Container,
-} from "reactstrap";
+import { Navbar, NavbarBrand, Container } from "reactstrap";
 
 const Header = () => {
   return (
     <Navbar
-      color= "transparent"
+      color="transparent"
       expand="lg"
-      className = "navbar-absolute fixed-top navbar-transparent"
+      className="navbar-absolute fixed-top navbar-transparent"
     >
       <Container fluid>
-        <div className="navbar-wrapper">  
-          <NavbarBrand href="/">Site Sonar - WLCG Configuration Monitoring Tool</NavbarBrand>
-        </div> 
+        <div className="navbar-wrapper">
+          <NavbarBrand href="/">
+            Site Sonar - WLCG Configuration Monitoring Tool
+          </NavbarBrand>
+        </div>
       </Container>
     </Navbar>
   );
-}
+};
 export default Header;
