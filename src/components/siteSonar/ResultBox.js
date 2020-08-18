@@ -1,6 +1,5 @@
 
 import React from "react";
-//Overlay: enable overlay = try
 import { Table } from 'reactstrap';
 // reactstrap components
 import {
@@ -12,6 +11,7 @@ import {
   Col,
   Button,
 } from "reactstrap";
+
 import { CSVLink } from "react-csv";
 
 const ResultBox = (props) => {

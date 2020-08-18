@@ -1,8 +1,8 @@
 {
-  "name": "paper-dashboard-react",
+  "name": "site-sonar-frontend",
   "version": "1.2.0",
   "private": true,
-  "homepage": "https://demos.creative-tim.com/paper-dashboard-react/#/dashboard",
+  "homepage": "https://gitlab.cern.ch/kwijethu/site-sonar-frontend",
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "4.5.0",
@@ -38,7 +38,6 @@
     "not op_mini all"
   ],
   "optionalDependencies": {
-    "@types/googlemaps": "3.39.6",
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "16.9.35",
     "ajv": "6.12.2",
