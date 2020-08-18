@@ -21,7 +21,7 @@ import Dashboard from "views/Dashboard.js";
 
 var routes = [
   {
-    path: "/dashboard",
+    path: "/",
     name: "Site Sonar - WLCG Configuration Monitoring Tool",
     icon: "nc-icon nc-bank",
     component: Dashboard,
