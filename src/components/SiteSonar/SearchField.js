@@ -23,6 +23,7 @@ const SearchField = (props) => {
           keys.push({ value: s_key, label: s_key, index: props.idx });
         }
         setSearchKeys([...keys]);
+        props.updateChildSearchKeys([...keys]);
       }
     }
     getSearchKeys();
@@ -85,6 +86,7 @@ SearchField.propTypes = {
   RunId: PropTypes.number,
   handleSearchKeyFieldChange: PropTypes.func,
   handleSearchValueFieldChange: PropTypes.func,
+  updateChildSearchKeys: PropTypes.func,
 };
 
 export default SearchField;

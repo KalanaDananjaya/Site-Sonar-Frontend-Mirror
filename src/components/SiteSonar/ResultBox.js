@@ -322,7 +322,7 @@ const ResultBox = (props) => {
                       </Col>
                       <Col md="8" xs="7">
                         <div className="numbers">
-                          <p className="card-category">Matching Percentage</p>
+                          <p className="card-category">Percentage</p>
                           <CardTitle tag="p">
                             {Math.round(
                               (props.searchData.matching_sites /

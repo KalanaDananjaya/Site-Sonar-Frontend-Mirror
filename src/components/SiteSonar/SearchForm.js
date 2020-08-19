@@ -2,13 +2,19 @@ import React, { useState } from "react";
 
 import SearchBox from "./SearchBox.js";
 import ResultBox from "./ResultBox";
-import LastRunDiv from "components/siteSonar/LastRunData.js";
+import LastRunDiv from "./LastRunData.js";
+import SearchQuery from "./SearchQuery.js";
 
 const SearchForm = () => {
   const [Result, setSearchResult] = useState({
     GridSearch: "",
     ShowResult: false,
     SearchResults: {},
+  });
+
+  const [SearchEquation, setSearchEquation] = useState({
+    value: "",
+    hidden: true,
   });
 
   const [AllRuns, setAllRuns] = useState({ all_runs: "Loading" });
@@ -34,6 +40,27 @@ const SearchForm = () => {
     }
   };
 
+  const showSearchQuery = (SearchFormInput) => {
+    const CharacterRegex = /([A-Z])/;
+    var Equation = SearchFormInput.Equation;
+    for (let letter of Equation) {
+      if (CharacterRegex.test(letter)) {
+        Equation = Equation.replace(
+          letter,
+          "(" +
+            SearchFormInput.SearchFields[letter]["query_key"] +
+            " : " +
+            SearchFormInput.SearchFields[letter]["query_value"] +
+            ")"
+        );
+      }
+    }
+    setSearchEquation({
+      value: Equation,
+      hidden: false,
+    });
+  };
+
   const handleRunChange = (data) => {
     const all_runs_array = {};
     for (const key in data.all_runs) {
@@ -53,9 +80,14 @@ const SearchForm = () => {
       ></LastRunDiv>
       <SearchBox
         storeSearchResults={storeSearchResults}
+        showSearchQuery={showSearchQuery}
         RunId={SelectedRun.run_id}
         style={{ margin: "10px" }}
       ></SearchBox>
+      <SearchQuery
+        equation={SearchEquation.value}
+        hidden={SearchEquation.hidden}
+      ></SearchQuery>
       <ResultBox
         searchData={Result.SearchResults}
         showResult={Result.ShowResult}

@@ -2,7 +2,7 @@
   "name": "site-sonar-frontend",
   "version": "1.2.0",
   "private": true,
-  "homepage": "https://gitlab.cern.ch/kwijethu/site-sonar-frontend",
+  "homepage": "http://18.220.133.83/",
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "4.5.0",

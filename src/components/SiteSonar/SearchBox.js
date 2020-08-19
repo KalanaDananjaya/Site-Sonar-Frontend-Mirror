@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
-import SearchField from "./SearchField.js";
 import { InputGroup, InputGroupText, Input, Button, Spinner } from "reactstrap";
-
 import axios from "axios";
 import Select from "react-select";
+import SearchField from "./SearchField.js";
 
 const SearchBox = (props) => {
   const BackendSitesUrl = `${process.env.REACT_APP_BACKEND_URL}/all_sites`;
 
   const [Sites, setSites] = useState([]);
+  const [InitialLoad, setInitialLoad] = useState(false);
   const [ResultReceived, setResultReceived] = useState(false);
 
   useEffect(() => {
@@ -31,6 +30,37 @@ const SearchBox = (props) => {
   const [SiteIdValue, setSiteIdValue] = useState("1");
 
   const [EquationState, setEquationState] = useState("");
+
+  const updateChildSearchKeys = (keys) => {
+    async function searchSingularity() {
+      const singularityExists = false;
+      keys.forEach((SearchKey) => {
+        if (SearchKey["value"] === "Singularity") {
+          singularityExists = true;
+        }
+      });
+      if (singularityExists) {
+        setResultReceived(true);
+        const SearchFormInput = {
+          SiteId: "all",
+          SearchFields: {
+            A: { query_key: "Singularity", query_value: "SUPPORTED" },
+          },
+          Equation: "A",
+          RunId: props.RunId,
+        };
+        axios.post(BackendUrl, { SearchFormInput }).then((res) => {
+          props.showSearchQuery(SearchFormInput);
+          setResultReceived(false);
+          props.storeSearchResults(res.data);
+        });
+      }
+      setInitialLoad(true);
+    }
+    if (!InitialLoad) {
+      searchSingularity();
+    }
+  };
 
   const handleSiteIdChange = (item) => {
     setSiteIdValue(item.value);
@@ -83,7 +113,7 @@ const SearchBox = (props) => {
     event.preventDefault();
     setResultReceived(true);
     let NumElements = Object.keys(SearchFieldState).length;
-    let Equation = EquationState.trim();
+    let Equation = EquationState.trim().toUpperCase();
     for (let letter of Equation) {
       if (CharacterRegex.test(letter)) {
         // check letter in range of variables
@@ -115,6 +145,7 @@ const SearchBox = (props) => {
       RunId: props.RunId,
     };
     axios.post(BackendUrl, { SearchFormInput }).then((res) => {
+      props.showSearchQuery(SearchFormInput);
       setResultReceived(false);
       props.storeSearchResults(res.data);
     });
@@ -149,6 +180,7 @@ const SearchBox = (props) => {
             idx={idx}
             handleSearchKeyFieldChange={handleSearchKeyFieldChange}
             handleSearchValueFieldChange={handleSearchValueFieldChange}
+            updateChildSearchKeys={updateChildSearchKeys}
             RunId={props.RunId}
           />
         ))}

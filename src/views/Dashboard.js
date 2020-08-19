@@ -18,7 +18,7 @@
 */
 import React from "react";
 
-import SearchForm from "components/siteSonar/SearchForm.js";
+import SearchForm from "components/SiteSonar/SearchForm.js";
 
 const Dashboard = (props) => {
   return (
